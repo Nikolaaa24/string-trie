@@ -2,3 +2,10 @@
 name = "string-trie"
 version = "0.1.0"
 edition = "2024"
+description = "A simple trie (prefix tree) for storing, prefix searching and deleting strings."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Nikolaaa24/string-trie"
+readme = "README.md"
+keywords = ["trie", "prefix-tree", "dictionary", "autocomplete"]
+categories = ["data-structures"]
+authors = ["Nikola Vučićević contact@nikolaaa.dev"]
