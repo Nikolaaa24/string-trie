@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 use std::str::Chars;
 
+/// Enum carrying information whether to limit results or not.
+/// Passed in the search function.
 pub enum ResultLimit {
     Unlimited,
     Limited(usize),
@@ -20,7 +22,7 @@ impl Node {
         let node = Node { children: HashMap::new(), is_end: false, };
         node
     }
-    
+
     fn search(&self, word: &str) -> Option<&Node> {
 
         let mut current_node = self;
@@ -68,8 +70,8 @@ impl Node {
         }
     }
 
-    fn delete(&mut self, mut it: Chars) -> bool { // test
-        let next_char = it.next(); //t
+    fn delete(&mut self, mut it: Chars) -> bool {
+        let next_char = it.next();
         match next_char {
             None => {
                 if self.is_end
@@ -105,6 +107,17 @@ impl Trie {
         Trie {root: node}
     }
 
+    /// Searches the trie using the prefix string.
+    ///
+    /// # Example
+    /// ```
+    /// # use string_trie::{ResultLimit, Trie};
+    /// let mut trie = Trie::new();
+    /// trie.insert("hello");
+    ///
+    /// let found = trie.search("h", ResultLimit::Unlimited);
+    /// assert_eq!(found[0], String::from("hello"));
+    /// ```
     pub fn search(&self, word: &str, limit: ResultLimit) -> Vec<String> {
         let mut vec = Vec::new();
         match self.root.search(word) {
@@ -119,6 +132,18 @@ impl Trie {
         }
     }
 
+    /// Inserts a string into the trie.
+    ///
+    /// # Example
+    /// ```
+    /// # use string_trie::{ResultLimit, Trie};
+    /// let mut trie = Trie::new();
+    ///
+    /// trie.insert("hello");
+    ///
+    /// let found = trie.search("h", ResultLimit::Unlimited);
+    /// assert_eq!(found[0], String::from("hello"));
+    /// ```
     pub fn insert(&mut self, word: &str) {
         let mut current = &mut self.root;
 
@@ -129,6 +154,22 @@ impl Trie {
         current.is_end = true;
     }
 
+    /// Deletes the string by deleting the node if no children exist or
+    /// invalidating the word by setting is_end to false otherwise.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use string_trie::{ResultLimit, Trie};
+    /// let mut trie = Trie::new();
+    /// trie.insert("car");
+    /// trie.insert("cart");
+    ///
+    /// trie.delete("car");
+    ///
+    /// let found = trie.search("car", ResultLimit::Unlimited);
+    /// assert_eq!(found[0], String::from("cart"));
+    /// ```
     pub fn delete(&mut self, word: &str) -> bool {
         self.root.delete(word.chars())
     }
