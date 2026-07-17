@@ -60,6 +60,29 @@ trie.insert("cart");
 trie.delete("car");
 ```
 If the node does not have children and is not an end of a string, it will be removed completely, otherwise if the end is reached, it will just mark the end as false (which means that node no longer represents the end of the string).
+
+## CLI Demo
+Includes a test program (`cli.rs`) that shows off all of the features.
+
+Simply run it by doing:
+```bash
+cargo run --example cli
+```
+
+Use `/add <string>` to add a string to the dictionary.
+
+Use `/search <string prefix>` to search the dictionary for strings with the given prefix. Default output limit is `10`.
+
+Use `/limit <number>` to limit the output to this number.
+
+Use `/delete <string>` to delete a specific string.
+
+Use `/help` to see these commands.
+
+Use `/exit` to exit the program.
+
+Use `/credits` to see the credits.
+
 ## License
 
 Licensed under either of:

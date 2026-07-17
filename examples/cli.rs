@@ -5,6 +5,7 @@ use string_trie::{Trie, ResultLimit};
 fn main() -> ! {
     println!("Dictionary");
     let mut dictionary = Trie::new();
+    let mut limit: usize = 10;
 
     loop {
         let input = read_input_safe("Use /help for command list: ", "Error while reading input, try again!");
@@ -25,12 +26,12 @@ fn main() -> ! {
                 std::process::exit(0);
             },
             "/credits" => {
-                println!("    Made by Nikola using Rust.");
+                println!("    Made by Nikola Vučićević using Rust.");
             },
             "/search" => {
                 let start = Instant::now();
                 println!("    Searching for words matching: {}", arg);
-                let limit = ResultLimit::Limited(10);
+                let limit = ResultLimit::Limited(limit);
                 for element in dictionary.search(arg, limit)
                 {
                     println!("        {}", element);
@@ -54,6 +55,10 @@ fn main() -> ! {
                     println!("    Word {} not found", arg);
                 }
                 println!("    Deleting took {:?}", start.elapsed());
+            },
+            "/limit" => {
+                limit = arg.to_string().parse().unwrap_or(limit);
+                println!("    Output limited to: {}", limit);
             },
             _ => {println!("    Invalid command")}
         }
