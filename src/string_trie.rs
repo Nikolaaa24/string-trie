@@ -8,6 +8,7 @@ pub enum ResultLimit {
     Limited(usize),
 }
 
+/// The struct representing the trie data structure.
 pub struct Trie {
     root: Node
 }
